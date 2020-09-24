@@ -7,93 +7,21 @@ fw = flywheel.Client()
 
 
 
-def 
 
-
-
-
-
-
-
-container_meta_dict = {'project': ['label',
-                                   'description'],
-                       'subject': ['label',
-                                   'type',
-                                   'firstname',
-                                   'lastname',
-                                   'sex',
-                                   'age',
-                                   'cohort',
-                                   'race',
-                                   'ethnicity',
-                                   'species',
-                                   'strain'],
-                       'session': ['label',
-                                   'timestamp',
-                                   'age',
-                                   'weight',
-                                   'operator',
-                                   'uid',
-                                   'timezone'],
-                       'acquisition': ['label',
-                                       'uid',
-                                       'timestamp'],
-                       'file': ['classification','name','modality','type']}
-
-
-# write_instructions = {
-#                         'write_rcfield': True,
-#                         'write_location': True,
-#                         'write_map_objects': True,
-#                         'write_sub_map_objects': True,
-#                         'write_map_object_fields': True,
-#                         'write_migrate': True,
-#                         'write_field_objects': True,
-#                         'write_meta': True,
-#                         'write_custom': True,
-#                         'write_files': True
-#                     }
-
-fo_key = 'write_field_objects'
-loc_key = 'write_location'
-rcf_key = 'write_rcfield'
-wm_key = 'write_migrate'
-wmo_key = 'write_map_objects'
-wsmo_key = 'write_sub_map_objects'
-wmof_key = 'write_map_object_fields'
-wmeta_key = 'write_meta'
-wc_key = 'write_custom'
-wf_key = 'write_files'
-
-def set_default_write_instructions():
-    write_instructions = {
-        'write_rcfield': True,
-        'write_location': True,
-        'write_map_objects': True,
-        'write_sub_map_objects': False,
-        'write_map_object_fields': False,
-        'write_migrate': True,
-        'write_field_objects': False,
-        'write_meta': True,
-        'write_custom': True,
-        'write_files': True
-    }
-    return(write_instructions)
 
 
 class mapper_object:
-    def __init__(self, container_type, record = None):
-        self.mappings = []
-        self.record = record
+    def __init__(self, container_type, record='', record_container='self'):
+        self.mappings = {}
+        self.record = {'rc_key': record, 'container': record_container, 'fw_key':''}
         self.ctype = container_type
 
-    def add_map(self,fw_meta, rc_field):
-        self.mappings.append(map(fw_meta, rc_field))
+    def add_map(self, fw_meta, rc_field):
+        self.mappings[fw_meta] = rc_field
         
     def to_dict(self):
-        mapped_dicts = [m.to_dict for m in self.mappings]
         self_dict = {'record': self.record,
-                     'map': mapped_dicts}
+                     'map': self.mappings}
         
         return(self_dict)
         
@@ -140,7 +68,7 @@ class container_object:
     def __init__(self, container, name="", ctype=None):
         self.fwid = container.id
         self.name = name
-        self.record_id = None
+        self.record_id = {'key': '', 'container': 'self', 'rc_key': ''}
         self.mappings = {}
         self.container = container
         self.ctype = self.container.container_type
