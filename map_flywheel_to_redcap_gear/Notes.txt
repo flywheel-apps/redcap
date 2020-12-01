@@ -1,0 +1,90 @@
+Current yaml style:
+subject:
+  record:
+    rc_key: subject_id
+    container: self
+    fw_key: label
+  map:
+    ethnicity: ethnicity_d1
+    label: fw_id_d1
+session:
+  record:
+    rc_key: subject_id
+    container: subject
+    fw_key: label
+  map:
+    age_years: age_d1
+    info.BIDS.Subject: bids_sub_d1
+acquisition:
+  record:
+    rc_key: subject_id
+    container: subject
+    fw_key: label
+  map:
+    label: acq_label_d1
+file:
+  record:
+    rc_key: subject_id
+    container: subject
+    fw_key: label
+  map:
+    classification.Intent: scan_intent_s1
+    info.BIDS.Folder]: scan_bids_folder_s1
+
+
+Intent:  gotta know what our "record_id" metadata tag is, and that can be stored once on the subject.
+Sub containers can say "the rc_id key is under the "label" tag in the subject container"
+
+
+Problems:
+Multiple sessions with the same metadata (for example, a subject with two sessions) will overwrite each other.
+It will send "age_years" from one session to redcap field "age_d1", then when it gets to the next session, it will overwrite.
+Solutions:
+reorganize so that you have to specify sub-container labels or ID's?
+ex:
+
+session:
+  record:
+    rc_key: subject_id
+    container: subject
+    fw_key: label
+  maps:
+    - ses_01:  <-This is the session ID
+         label: acq_label_d1
+    - ses_02:
+         label: acq_label_d2
+
+Problems: Sessions can have the same name
+Can no longer be a simple 2 column CSV, will need at least 4 I think:
+"Container Level", "Container Name", "Fw Field", "RC Field"
+
+Using container ID's solves this but it's not very user friendly.
+
+Other option:
+Every container gets an RC upload .json file.  Wow I don't even like writing that.  
+
+
+
+ok ok ok how about this:
+The gear will generate a template file from a project, template will not have fields filled out but will look like this:
+- config for "Redcap Record Field", "Container level with record", "field with record"
+subjects:
+    record:
+        rc_key: <From Config>
+        container: <from_config>
+        fw_key: <from_config>
+    
+    containers:
+        - ALL:
+            container_id: <ID>
+            maps:
+                - []
+            
+        - sub2:
+            container_id: <ID>
+    
+
+This gear will enforce that:
+ - subject ID's are unique
+ - within a subject, session ID's are unique
+ - within a session, acquisition ID's are unique

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3fd66dc1-980b-4b44-8843-447fec67569f" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JupyterTrust" id="eb26f47b-64f3-42cd-8d8e-e0d030c99401" />
+  <component name="ProjectId" id="1ghELnWxjz8lOgyFTmomWLdBYDb" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="TERMINAL_CUSTOM_COMMANDS_GOT_IT" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.smartKeys" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3fd66dc1-980b-4b44-8843-447fec67569f" name="Default Changelist" comment="" />
+      <created>1598558370504</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1598558370504</updated>
+      <workItem from="1598558372347" duration="17059000" />
+      <workItem from="1598883420305" duration="19393000" />
+      <workItem from="1598963879585" duration="19828000" />
+      <workItem from="1599245157824" duration="1341000" />
+      <workItem from="1600179263249" duration="2296000" />
+      <workItem from="1600720519426" duration="28329000" />
+      <workItem from="1601044560732" duration="11943000" />
+      <workItem from="1601300854405" duration="16530000" />
+      <workItem from="1601393495057" duration="27406000" />
+      <workItem from="1601911112120" duration="1573000" />
+      <workItem from="1602701725406" duration="2100000" />
+      <workItem from="1602855318984" duration="8982000" />
+      <workItem from="1603116543625" duration="17459000" />
+      <workItem from="1603992967081" duration="4440000" />
+      <workItem from="1604682251250" duration="1425000" />
+      <workItem from="1605213922124" duration="1424000" />
+      <workItem from="1606159543415" duration="2464000" />
+      <workItem from="1606256519996" duration="12000" />
+      <workItem from="1606750625009" duration="1095000" />
+    </task>
+    <task id="LOCAL-00001" summary="Before the cleanse">
+      <created>1600892623380</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1600892623381</updated>
+    </task>
+    <task id="LOCAL-00002" summary="works with one session">
+      <created>1600973604908</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1600973604908</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Before the cleanse" />
+    <MESSAGE value="works with one session" />
+    <option name="LAST_COMMIT_MESSAGE" value="works with one session" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2572" y="463" key="CommitChangelistDialog2" timestamp="1600973604709">
+      <screen x="1680" y="23" width="3008" height="1583" />
+    </state>
+    <state x="2572" y="463" key="CommitChangelistDialog2/1680.23.3008.1583/0.23.1680.1027@1680.23.3008.1583" timestamp="1600973604709" />
+    <state x="2800" y="363" key="SettingsEditor" timestamp="1601400277720">
+      <screen x="1680" y="23" width="3008" height="1583" />
+    </state>
+    <state x="2800" y="363" key="SettingsEditor/1680.23.3008.1583/0.23.1680.1027@1680.23.3008.1583" timestamp="1601400277720" />
+    <state x="2723" y="614" key="Vcs.Push.Dialog.v2" timestamp="1600973609580">
+      <screen x="1680" y="23" width="3008" height="1583" />
+    </state>
+    <state x="2723" y="614" key="Vcs.Push.Dialog.v2/1680.23.3008.1583/0.23.1680.1027@1680.23.3008.1583" timestamp="1600973609580" />
+  </component>
+</project>
