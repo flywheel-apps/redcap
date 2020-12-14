@@ -1,9 +1,8 @@
 import logging
-import os
 import yaml
 import flywheel
-from mapping_classes import container_object, mapper_object
-import flywheel_helpers as fh
+from utils.mapping_classes import container_object, mapper_object
+from utils import flywheel_helpers as fh
 
 log=logging.getLogger(__name__)
 log.setLevel('DEBUG')

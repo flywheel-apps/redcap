@@ -1,11 +1,4 @@
-import flywheel_helpers as fh
-import flywheel
-from redcap import Project, RedcapError
-#fw = flywheel.Client()
-
-
-
-
+from utils import flywheel_helpers as fh
 
 
 
@@ -47,6 +40,7 @@ class container_object:
         
         maps = {}
         [maps.update(co.to_dict()) for co in self.maps]
+        
         if self.files:
             files = {}
             [files.update(co.to_dict()) for co in self.files]
@@ -66,7 +60,7 @@ class container_object:
             }
             }
         
-        if self.id == 'ALL' or self.id is None:
+        if self.id == 'ALL-CONTAINERS' or self.id is None:
             del self_dict[self.name]['ContainerID']
         
         return(self_dict)

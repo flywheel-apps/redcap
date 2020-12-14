@@ -3,9 +3,12 @@ import os
 import yaml
 import flywheel
 from utils import flywheel_helpers as fh
+import utils.export_classes as ec
 import json
 from redcap import Project
 import sys
+
+import re
 
 log=logging.getLogger(__name__)
 log.setLevel('DEBUG')
@@ -50,98 +53,6 @@ def get_nested_value(container, keys):
     return(value)
 
 
-def decode_record(fw, container, record):
-    log.debug('GETTING RECORD')
-    keys = record['fw_key']
-    record_container_level = record['container_level']
-    
-    if record_container_level == 'self':
-        rc_record = get_nested_value(container, keys)
-    else:
-        record_container = fh.get_parent_at_level(fw, container, record_container_level)
-        if record_container is None:
-            log.error(f'record location must be in a parent container. '\
-                      f'level {record_container_level} is  child of {container.container_type}')
-            
-            raise Exception('Record level must be child')
-        
-        rc_record = get_nested_value(record_container, keys)
-    
-    return(rc_record)
-
-
-
-def create_import_object(fw, record, map, container):
-    #log.debug(container)
-    record_object = {}
-    fw_record = decode_record(fw, container, record)
-    record_object[record['rc_key']] = fw_record
-    
-    for fw_key, rc_key in map.items():
-        log.debug(f'fw_key: {fw_key}')
-        log.debug(f'rc_key: {rc_key}')
-        try:
-            fw_value = get_nested_value(container, fw_key)
-        except Exception as e:
-            log.exception(e)
-            fw_value = 'NA'
-        
-        log.debug(f'container: {container.container_type}')
-        log.debug(f'key/val: {fw_key}, {fw_value}')
-        
-        
-        record_object[rc_key] = fw_value
-    
-    return(record_object)
-
-
-def process_container_level(fw, project, level, container_map):
-    
-    children = fh.get_iter_children(fw, project, level)
-    
-    records = []
-    
-    map = container_map['containers']
-    record_info = container_map['record']
-    
-    log.debug('map:')
-    log.debug(map)
-    log.debug(f'level: {level}')
-    log.debug('children')
-    log.debug('record')
-    log.debug(record_info)
-    
-    for child in children:
-        if level != 'file':
-            log.debug('reloading')
-            child = child.reload()
-        child_object = create_import_object(fw, record_info, map, child)
-        records.append(child_object)
-        
-    return records
-
-
-def process_yaml_file(fw, project, yaml_file_path):
-    
-    with open(yaml_file_path) as file:
-        dict_in = yaml.full_load(file)
-        file.close()
-    
-    meta_objects = []
-    for level, container_map in dict_in.items():
-        
-        records = process_container_level(fw, project, level, container_map)
-        meta_objects.append(records)
-    
-    return(meta_objects)
-
-
-def upload_to_redcap(record_objects, rc_project):
-    
-    for record_object in record_objects:
-        for record in record_object:
-            print(record)
-            rc_project.import_records([record])
 
 
 def test_inputs(fw_api, fw_project_id, yaml_file, rc_api, rc_url):
@@ -179,10 +90,177 @@ def test_inputs(fw_api, fw_project_id, yaml_file, rc_api, rc_url):
     
 
     
-    
-def main(fwapi, projectID, yamlFile, rcAPI, rcURL):
-    
-    fw, fw_project, rc_project = test_inputs(fwapi, projectID, yamlFile, rcAPI, rcURL)
-    records = process_yaml_file(fw, fw_project, yamlFile)
-    upload_to_redcap(records, rc_project)
 
+
+def get_redcap_mc_map2(project):
+    metadata = project.metadata
+    choice_key = 'select_choices_or_calculations'
+    choice_meta = [m for m in metadata if m.get(choice_key) != '']
+
+    pattern = '(?P<num>\d+),\s?(?P<choice>[^\|]+)\s?'
+    redcap_reassign_map = {}
+
+    for cm in choice_meta:
+        meta_key = cm['field_name']
+        choice_map = re.findall(pattern, cm[choice_key])
+
+        if choice_map:
+            cm_map = {str(kv[0]).lower().strip(): kv[1] for kv in choice_map}
+            redcap_reassign_map[meta_key] = cm_map
+
+    return(redcap_reassign_map)
+
+
+
+
+def build_redcap_dict(fields_of_interest, project, recordid):
+    
+    rc_map = get_redcap_mc_map2(project)
+    
+    pattern = '(?P<num>\d+),\s?(?P<choice>[^\|]+)\s?'
+    choice_key = 'select_choices_or_calculations'
+    
+    
+    try:
+        rc_records = project.export_records(fields=fields_of_interest)
+    except Exception as e:
+        log.error(f"Error querrying REDCap for fields {fields_of_interest}")
+        log.exception(e)
+        sys.exit(1)
+    metadata = project.metadata
+    
+    
+    redcap_objects = {}
+    log.info(f"found {len(rc_records)} records")
+    for r in rc_records:
+        id = r[recordid]
+        #print(r)
+        record_object = []
+        for foi in fields_of_interest:
+            # This must be only one, metadata field_names are enforced unique by redcap
+            meta = [m for m in metadata if m.get('field_name') == foi]
+            
+            # Truthfully this should never happen, it'll probably be caught above by the 
+            # First try...except in this function
+            try:
+                meta = meta[0]
+            except Exception as e:
+                log.error(f"no redcap field match for {foi}")
+                log.exception(e)
+                sys.exit(1)
+            
+            
+            if meta.get('field_type') == 'slider':
+                record_object.append(ec.RCslider(meta, r))
+                
+            elif meta.get('field_type') == 'truefalse':
+                record_object.append(ec.RCtruefalse(meta, r))
+                
+            elif meta.get('field_type') == 'yesno':
+                record_object.append(ec.RCyesno(meta, r))
+                
+            elif meta.get('field_type') == 'notes':
+                record_object.append(ec.RCnotes(meta, r))
+                
+            elif meta.get('field_type') == 'radio':
+                record_object.append(ec.RCradio(meta, r, rc_map))
+                
+            elif meta.get('field_type') == 'checkbox':
+                record_object.append(ec.RCcheckbox(meta, r, rc_map))
+                
+            elif meta.get('field_type') == 'dropdown':
+                record_object.append(ec.RCdropdown(meta, r, rc_map))
+                
+            elif meta.get('field_type') == 'text':
+                record_object.append(ec.RCtext(meta, r))
+                
+            else:
+                log.warning(f"meta field type {meta.get('field_type')} not recognized")
+    
+        record_dict = {}
+        for obj in record_object:
+            record_dict.update(obj.get_fw_object())
+        
+        redcap_objects[id] = record_dict
+    
+    return(redcap_objects)
+
+
+def rc_2_fw(yamlFile='',rc_api='', rc_url=''):
+
+    
+    if yamlFile=='':
+        yamlFile = '/Users/davidparker/Documents/Flywheel/SSE/MyWork/Gears/Redcap/redcap/map_redcap_to_flywheel_service/example_template.yaml'
+    
+    with open(yamlFile) as file:
+        dict_in = yaml.full_load(file)
+        file.close()
+
+    record = dict_in["record"]
+    fields = dict_in["fields"]
+    
+    fw_key_level = record['container_level']
+    fw_key = record['fw_key']
+    rc_key = record['rc_key']
+    
+    if rc_api=='':
+        rc_api = os.environ['RCAPI_FW']
+        
+    if rc_url=='':
+        rc_url = os.environ['RCURL_FW']
+        
+    project = Project(rc_url, rc_api)
+    
+    rc_dict = build_redcap_dict(fields, project, rc_key)
+    return(rc_dict, fw_key_level, fw_key)
+
+
+
+
+
+def expand_metadata(meta_string, container):
+    metas = meta_string.split('.')
+    temp_container = container
+    ct = container.container_type
+    name = fh.get_name(container)
+
+    first = metas.pop(0)
+    val = getattr(container, first)
+    temp_container = val
+    for meta in metas:
+        val = temp_container.get(meta)
+        if val:
+            temp_container = val
+        else:
+            log.warning(f'No metadata value {meta_string} found for {ct} {name}')
+            return (None)
+    return (val)
+
+
+
+def rc_dict_2_fw(fw_project, rc_dict, fw_key_level, fw_key):
+    
+    if fw_key_level != 'subject':
+        log.error('Red cap key must be stored on subject level.  Only subject level is supported at this time')
+        raise Exception('Redcap key must be stored at subject level')
+    
+    
+    for sub in fw_project.subjects.iter():
+        sub = sub.reload()
+        rc_id = expand_metadata(fw_key, sub)
+        
+        if rc_id is None:
+            continue
+        
+        if rc_id in rc_dict:
+            sub.update_info({'REDCAP':rc_dict[rc_id]})
+        
+        
+        
+        
+# fw=flywheel.Client()
+# project = fw.get('5db0759469d4f3001f16e9c1')
+# 
+#         
+# rc_dict, fw_key_level, fw_key = rc_2_fw()
+# rc_dict_2_fw(project, rc_dict, fw_key_level, fw_key)

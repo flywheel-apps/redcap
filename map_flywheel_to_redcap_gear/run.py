@@ -4,7 +4,7 @@ import json
 import logging
 import os
 import sys
-import yaml_generator as yg
+from utils import yaml_generator as yg
 
 log = logging.getLogger(__name__)
 

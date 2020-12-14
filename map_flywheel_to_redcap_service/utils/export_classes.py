@@ -1,5 +1,6 @@
 import flywheel
 import logging
+from utils.yaml_decoder import expand_metadata
 
 log=logging.getLogger(__name__)
 log.setLevel("DEBUG")

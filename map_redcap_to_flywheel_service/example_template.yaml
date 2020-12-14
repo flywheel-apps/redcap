@@ -1,0 +1,29 @@
+# This describes where we will find the correct REDCAP
+# "record ID" for metadata at the subject level
+record:
+
+  # First we indicate what the redcap record ID label is:
+  # In this case the label is "rc_subid" in redcap.
+  rc_key: record_id
+
+  # Now we indicte where the VALUE of this redcap record ID is
+  # within flywheel:
+  fw_key: info.redcapID
+
+  # Finally we must know which container this fw_key is on:
+  container_level: subject
+
+  # Together, these commands mean that by including they key/value
+  # pair: {'rc_subid': subject.label}, we can tell REDCap which 
+  # Record we will be updating.
+
+# This is the meat of the mapping.  It specifies which 
+# flywheel metadata field is mapped to which redcap 
+# field.  Nested fields are allowed (info.BIDS.intent)
+fields: 
+
+  # This means the RC items listed here will be copied over to each subject
+  - interpretable
+  - pattern
+  - pattern_atyp
+  - findings_op

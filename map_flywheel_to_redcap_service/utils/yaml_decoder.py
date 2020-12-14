@@ -13,23 +13,6 @@ log.setLevel('DEBUG')
 log.info(f'log level {log.level} ')
 
 
-def get_rec_val_for_container(container, record):
-    rc_rec_level = record['container_level']
-    fw_rec_field = record['fw_key']
-
-    if rc_rec_level == 'self':
-        fw_rec_val = expand_metadata(fw_rec_field, container)
-    else:
-        parent = fh.get_parent_at_level(fw, container, rc_rec_level)
-        if not parent:
-            log.error(f'Error getting parent container {rc_rec_level} from '
-                      f'{container.container_type} {fh.get_name(container)}')
-            raise Exception('Error getting Parent')
-        parent = parent.reload()
-        fw_rec_val = expand_metadata(parent, fw_rec_field)
-
-    return (fw_rec_val)
-
 
 def add_fields_for_container(container, map_labels, search_term):
     sub_container = map_labels.get(search_term)
@@ -130,7 +113,7 @@ def map_container_and_subcontainers(fw, dict_in, level, parent_container, prev_r
     return (call_list)
 
 
-def level_map(fw, dict_in, project):
+def initialize_level_map(fw, dict_in, project):
     
     # Our top level is subject
     level = 'subject'
@@ -181,8 +164,6 @@ def collapse_calls_by_record(calls, record_field):
         collapsed_calls.append(single_call)
 
     return collapsed_calls
-
-
 
 
 def get_redcap_mc_map(project):
@@ -275,7 +256,7 @@ def test_inputs(fw_api, fw_project_id, yaml_file, rc_api, rc_url):
     return (fw_project, rc_project)
 
 
-def main(fw, fwapi, projectID, yamlFile, rcAPI, rcURL):
+def main(fwapi, projectID, yamlFile, rcAPI, rcURL):
 
     fw, fw_project, rc_project = test_inputs(fwapi, projectID, yamlFile, rcAPI, rcURL)
 
@@ -285,7 +266,7 @@ def main(fw, fwapi, projectID, yamlFile, rcAPI, rcURL):
     
     record_field = get_record_field(dict_in)
     
-    calls = level_map(fw, dict_in, fw_project)
+    calls = initialize_level_map(fw, dict_in, fw_project)
     calls = collapse_calls_by_record(calls, record_field)
 
     rr_map = get_redcap_mc_map(rc_project)
@@ -298,3 +279,5 @@ def main(fw, fwapi, projectID, yamlFile, rcAPI, rcURL):
 
 
     
+
+
