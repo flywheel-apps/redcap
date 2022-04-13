@@ -23,7 +23,7 @@ def add_fields_for_container(container, map_labels, search_term):
         if sub_maps:
             print(f'Found Maps for {search_term}: {sub_maps}')
             for fw_meta, rc_var in sub_maps.items():
-                fw_val = expand_metadata(fw_meta, container)
+                fw_val = ec.expand_metadata(fw_meta, container)
                 new_call.update({rc_var: fw_val})
 
         sub_files = sub_container.get('files')
@@ -39,7 +39,7 @@ def add_fields_for_container(container, map_labels, search_term):
                     file_map = sub_files[file]['maps']
 
                     for fw_meta, rc_var in file_map.items():
-                        fw_val = expand_metadata(fw_meta, file_match)
+                        fw_val = ec.expand_metadata(fw_meta, file_match)
                         new_call.update({rc_var: fw_val})
 
     return (new_call)
@@ -79,8 +79,11 @@ def map_container_and_subcontainers(fw, dict_in, level, parent_container, prev_r
         else:
             rec_parent = fh.get_parent_at_level(fw, child, id_level)
             rec_parent = rec_parent.reload()
-            fw_id = expand_metadata(fw_key, rec_parent)
-
+            fw_id = ec.expand_metadata(fw_key, rec_parent)
+            
+        if fw_id is None:
+            continue
+        
         child_call = {rc_id: fw_id}
 
         child = child.reload()
@@ -131,23 +134,7 @@ def initialize_level_map(fw, dict_in, project):
     return (full_call)
 
 
-def expand_metadata(meta_string, container):
-    metas = meta_string.split('.')
-    temp_container = container
-    ct = container.container_type
-    name = fh.get_name(container)
 
-    first = metas.pop(0)
-    val = getattr(container, first)
-    temp_container = val
-    for meta in metas:
-        val = temp_container.get(meta)
-        if val:
-            temp_container = val
-        else:
-            log.warning(f'No metadata value {meta_string} found for {ct} {name}')
-            return (None)
-    return (val)
 
 
 def collapse_calls_by_record(calls, record_field):
@@ -253,7 +240,7 @@ def test_inputs(fw_api, fw_project_id, yaml_file, rc_api, rc_url):
         print(f'ERROR - yaml file {yaml_file} does not exist')
         sys.exit(1)
 
-    return (fw_project, rc_project)
+    return (fw, fw_project, rc_project)
 
 
 def main(fwapi, projectID, yamlFile, rcAPI, rcURL):

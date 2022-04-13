@@ -14,6 +14,7 @@ class RedcapField:
         self.field_name = meta.get("field_name")
         self.field_label = meta.get("field_label")
         self.field_type = meta.get("field_type")
+        self.form_name = meta.get("form_name")
         self.choices = meta.get("select_choices_or_calculations")
         self.meta = meta
         self.record = record

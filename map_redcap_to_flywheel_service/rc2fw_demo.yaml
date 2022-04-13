@@ -6,9 +6,9 @@ record:
   # In this case the label is "rc_subid" in redcap.
   rc_key: record_id
 
-  # Now we indicte where the VALUE of this redcap record ID is
+  # Now we indicate where the VALUE of this redcap record ID is
   # within flywheel:
-  fw_key: info.redcapID
+  fw_key: info.REDCapID
 
   # Finally we must know which container this fw_key is on:
   container_level: subject
@@ -18,8 +18,7 @@ record:
   # Record we will be updating.
 
 # This is the meat of the mapping.  It specifies which 
-# flywheel metadata field is mapped to which redcap 
-# field.  Nested fields are allowed (info.BIDS.intent)
+# redcap metadata to import.
 fields: 
 
   # This means the RC items listed here will be copied over to each subject
@@ -27,3 +26,15 @@ fields:
   - pattern
   - pattern_atyp
   - findings_op
+  - ggo_density
+  - ggo_other
+  - severity_rl
+  - severity_lu
+  - vasc_findings
+  - slider_test
+  - mc_drop
+  - l_edv
+  - l_esv
+  - l_hr
+  - l_co
+

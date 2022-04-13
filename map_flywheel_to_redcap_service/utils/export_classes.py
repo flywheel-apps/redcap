@@ -1,6 +1,6 @@
 import flywheel
 import logging
-from utils.yaml_decoder import expand_metadata
+import utils.flywheel_helpers as fh
 
 log=logging.getLogger(__name__)
 log.setLevel("DEBUG")
@@ -43,3 +43,21 @@ class export_map:
         self.files = files
 
 
+
+def expand_metadata(meta_string, container):
+    metas = meta_string.split('.')
+    temp_container = container
+    ct = container.container_type
+    name = fh.get_name(container)
+
+    first = metas.pop(0)
+    val = getattr(container, first)
+    temp_container = val
+    for meta in metas:
+        val = temp_container.get(meta)
+        if val:
+            temp_container = val
+        else:
+            log.warning(f'No metadata value {meta_string} found for {ct} {name}')
+            return (None)
+    return (val)

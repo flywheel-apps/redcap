@@ -89,7 +89,13 @@ def test_inputs(fw_api, fw_project_id, yaml_file, rc_api, rc_url):
     return(fw, fw_project, rc_project)
     
 
-    
+
+# def map_fields_to_forms(project):
+#     metadata = project.metadata
+#     fields2forms = {m['field_name']: m['form_name'] for m in metadata}
+#     return(fields2forms)
+# 
+
 
 
 def get_redcap_mc_map2(project):
@@ -178,9 +184,16 @@ def build_redcap_dict(fields_of_interest, project, recordid):
                 log.warning(f"meta field type {meta.get('field_type')} not recognized")
     
         record_dict = {}
-        for obj in record_object:
-            record_dict.update(obj.get_fw_object())
         
+        for obj in record_object:
+                
+            form = obj.form_name
+            print(form)
+            if form not in record_dict:
+                record_dict[form] = {}
+                
+            record_dict[form] |= obj.get_fw_object()
+        print(record_dict)
         redcap_objects[id] = record_dict
     
     return(redcap_objects)
@@ -190,7 +203,7 @@ def rc_2_fw(yamlFile='',rc_api='', rc_url=''):
 
     
     if yamlFile=='':
-        yamlFile = '/Users/davidparker/Documents/Flywheel/SSE/MyWork/Gears/Redcap/redcap/map_redcap_to_flywheel_service/example_template.yaml'
+        yamlFile = '/Users/davidparker/Documents/Flywheel/SSE/MyWork/Gears/Redcap/redcap/map_redcap_to_flywheel_service/rc2fw_demo.yaml'
     
     with open(yamlFile) as file:
         dict_in = yaml.full_load(file)
@@ -253,7 +266,7 @@ def rc_dict_2_fw(fw_project, rc_dict, fw_key_level, fw_key):
             continue
         
         if rc_id in rc_dict:
-            sub.update_info({'REDCAP':rc_dict[rc_id]})
+            sub.update_info({'REDCAP': rc_dict[rc_id]})
         
         
         
@@ -264,3 +277,4 @@ def rc_dict_2_fw(fw_project, rc_dict, fw_key_level, fw_key):
 #         
 # rc_dict, fw_key_level, fw_key = rc_2_fw()
 # rc_dict_2_fw(project, rc_dict, fw_key_level, fw_key)
+

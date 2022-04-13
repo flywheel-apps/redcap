@@ -10,7 +10,7 @@
   "version": "0.0.0_alpha6",
   "custom": {
     "flywheel": {
-      "suite": "FSL"
+      "suite": "REDCap"
     },
     "docker-image": "flywheel/redcap_template:0.0.0",
     "gear-builder": {
