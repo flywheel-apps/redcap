@@ -128,12 +128,16 @@ def build_redcap_dict(fields_of_interest, project, recordid):
     
     
     try:
+        if project.def_field not in fields_of_interest:
+            fields_of_interest.append(project.def_field)
+
         rc_records = project.export_records(fields=fields_of_interest)
     except Exception as e:
         log.error(f"Error querrying REDCap for fields {fields_of_interest}")
         log.exception(e)
         sys.exit(1)
     metadata = project.metadata
+    field_names = project.export_field_names()
     
     
     redcap_objects = {}
@@ -144,16 +148,33 @@ def build_redcap_dict(fields_of_interest, project, recordid):
         record_object = []
         for foi in fields_of_interest:
             # This must be only one, metadata field_names are enforced unique by redcap
+
             meta = [m for m in metadata if m.get('field_name') == foi]
             
-            # Truthfully this should never happen, it'll probably be caught above by the 
-            # First try...except in this function
-            try:
-                meta = meta[0]
-            except Exception as e:
-                log.error(f"no redcap field match for {foi}")
-                log.exception(e)
-                sys.exit(1)
+
+            if not meta:
+                field = [f for f in field_names if f.get('original_field_name')==foi]
+                if not field:
+                    log.error(f"no redcap field match for {foi}")
+                    log.exception(e)
+                    sys.exit(1)
+
+                field = field[0]
+
+                # If we're here it's some weird field that just indicates if the form is completed
+                form_name = foi
+                if foi.endswith('_complete'):
+                    form_name = foi[:-len('_complete')]
+
+                meta = [{'field_type': 'truefalse',
+                        "field_name": field['original_field_name'],
+                        "field_label": field ['export_field_name'],
+                        "form_name": form_name,
+                        "select_choices_or_calculations":''}]
+
+
+            meta = meta[0]
+
             
             
             if meta.get('field_type') == 'slider':
@@ -182,6 +203,7 @@ def build_redcap_dict(fields_of_interest, project, recordid):
                 
             else:
                 log.warning(f"meta field type {meta.get('field_type')} not recognized")
+                record_object.append(ec.RCtext(meta, r))
     
         record_dict = {}
         
