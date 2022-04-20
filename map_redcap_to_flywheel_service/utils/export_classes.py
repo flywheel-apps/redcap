@@ -104,8 +104,8 @@ class RCtruefalse(RedcapField):
 
 class RCnotes(RedcapField):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, meta, record):
+        super().__init__(meta, record)
         self.value = self.record.get(self.field_name)
 
 
