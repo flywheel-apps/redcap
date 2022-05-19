@@ -35,6 +35,11 @@ class RCtext(RedcapField):
         super().__init__(meta, record)
         self.value = self.record.get(self.field_name)
 
+class RCcalc(RedcapField):
+
+    def __init__(self,meta, record):
+        super().__init__(meta, record)
+        self.value = self.record.get(self.field_name)
 
 class RCyesno(RedcapField):
 

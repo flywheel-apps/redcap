@@ -139,7 +139,6 @@ def build_redcap_dict(fields_of_interest, project, recordid):
     metadata = project.metadata
     field_names = project.export_field_names()
     
-    
     redcap_objects = {}
     log.info(f"found {len(rc_records)} records")
     for r in rc_records:
@@ -200,6 +199,9 @@ def build_redcap_dict(fields_of_interest, project, recordid):
                 
             elif meta.get('field_type') == 'text':
                 record_object.append(ec.RCtext(meta, r))
+
+            elif meta.get('field_type') == 'calc':
+                record_object.append(ec.RCcalc(meta, r))
                 
             else:
                 log.warning(f"meta field type {meta.get('field_type')} not recognized")
