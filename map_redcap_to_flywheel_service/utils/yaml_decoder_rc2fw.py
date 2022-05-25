@@ -175,9 +175,6 @@ def remove_repeat_instances(records, record_id, foids):
             new_value = ''
             old_value = ''
             for j, entry in enumerate(temp_data):
-                if j == 0:
-                    new_value = ''
-                    old_value = ''
 
                 try:
                     new_value = entry[i]
