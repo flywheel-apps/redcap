@@ -59,3 +59,6 @@ if __name__ == '__main__':
     
     yd.rc_dict_2_fw(project, rc_dict, fw_key_level, fw_key)
 
+# TODO:
+# - create subjects if ID doesn't exist
+# - create sessions off of
