@@ -10,7 +10,8 @@ fw = flywheel.Client()
 
 
 class RedcapField:
-    def __init__(self, meta, record):
+    type_=None
+    def __init__(self, meta, record, rc_map):
         self.field_name = meta.get("field_name")
         self.field_label = meta.get("field_label")
         self.field_type = meta.get("field_type")
@@ -18,6 +19,7 @@ class RedcapField:
         self.choices = meta.get("select_choices_or_calculations")
         self.meta = meta
         self.record = record
+        self.rc_map = rc_map
 
     def get_fw_object(self):
         fw_dict_out = {self.field_label: {'field_name': self.field_name,
@@ -28,23 +30,35 @@ class RedcapField:
     def get_value(self):
         return (self.value)
 
+    @classmethod
+    def factory(cls, type_: str, meta, record, rc_map):
+        """Return an instantiated Collector."""
+        for sub in cls.__subclasses__():
+            if type_.lower() == sub.type_:
+                return sub(meta, record, rc_map)
+        raise NotImplementedError(f"redcap field type {type_} no supported")
+
+
+
 
 class RCtext(RedcapField):
-
-    def __init__(self,meta, record):
-        super().__init__(meta, record)
+    type_='text'
+    def __init__(self,meta, record, rc_map):
+        super().__init__(meta, record, rc_map)
         self.value = self.record.get(self.field_name)
 
 class RCcalc(RedcapField):
+    type_='calc'
 
-    def __init__(self,meta, record):
-        super().__init__(meta, record)
+    def __init__(self,meta, record, rc_map):
+        super().__init__(meta, record, rc_map)
         self.value = self.record.get(self.field_name)
 
 class RCyesno(RedcapField):
+    type_ = 'yesno'
 
-    def __init__(self,meta, record):
-        super().__init__(meta, record)
+    def __init__(self,meta, record, rc_map):
+        super().__init__(meta, record, rc_map)
         self.value = self.record.get(self.field_name)
 
         if self.value == '0':
@@ -56,19 +70,20 @@ class RCyesno(RedcapField):
 
 
 class RCcheckbox(RedcapField):
+    type_="checkbox"
 
     def __init__(self, meta, record, rc_map):
-        super().__init__(meta, record)
-        self.value = self.map_field_to_choices(rc_map)
+        super().__init__(meta, record, rc_map)
+        self.value = self.map_field_to_choices()
 
-    def map_field_to_choices(self, rc_map):
+    def map_field_to_choices(self):
         foi = self.field_name
         record = self.record
 
-        if foi in rc_map:
-            log.debug(f"found {foi} in rc_map")
+        if foi in self.rc_map:
+            log.debug(f"found {foi} in self.rc_map")
 
-            working_map = rc_map[foi]
+            working_map = self.rc_map[foi]
 
             choices = {key: val for key, val in record.items() if key.startswith(foi + "___")}
 
@@ -87,16 +102,17 @@ class RCcheckbox(RedcapField):
 
 
 class RCslider(RedcapField):
+    type_='slider'
 
-    def __init__(self,meta, record):
-        super().__init__(meta, record)
+    def __init__(self,meta, record, rc_map):
+        super().__init__(meta, record, rc_map)
         self.value = self.record.get(self.field_name)
 
 
 class RCtruefalse(RedcapField):
-
-    def __init__(self, meta, record):
-        super().__init__(meta, record)
+    type_='truefalse'
+    def __init__(self, meta, record, rc_map):
+        super().__init__(meta, record, rc_map)
         self.value = self.record.get(self.field_name)
 
         if self.value == '0':
@@ -108,23 +124,25 @@ class RCtruefalse(RedcapField):
 
 
 class RCnotes(RedcapField):
+    type_='notes'
 
-    def __init__(self, meta, record):
-        super().__init__(meta, record)
+    def __init__(self, meta, record, rc_map):
+        super().__init__(meta, record, rc_map)
         self.value = self.record.get(self.field_name)
 
 
 class RCradio(RedcapField):
+    type_='radio'
 
     def __init__(self, meta, record, rc_map):
-        super().__init__(meta, record)
-        self.value = self.map_field_to_choices(rc_map)
+        super().__init__(meta, record, rc_map)
+        self.value = self.map_field_to_choices()
 
-    def map_field_to_choices(self, rc_map):
+    def map_field_to_choices(self):
         foi = self.field_name
         record = self.record
 
-        field_map = rc_map.get(foi)
+        field_map = self.rc_map.get(foi)
 
         if field_map is None:
             log.error(f"No map for field {foi}")
@@ -139,16 +157,17 @@ class RCradio(RedcapField):
 
 
 class RCdropdown(RedcapField):
+    type_='dropdown'
 
     def __init__(self, meta, record, rc_map):
-        super().__init__(meta, record)
-        self.value = self.map_field_to_choices(rc_map)
+        super().__init__(meta, record, rc_map)
+        self.value = self.map_field_to_choices()
 
-    def map_field_to_choices(self, rc_map):
+    def map_field_to_choices(self):
         foi = self.field_name
         record = self.record
 
-        field_map = rc_map.get(foi)
+        field_map = self.rc_map.get(foi)
 
         if field_map is None:
             log.error(f"No map for field {foi}")

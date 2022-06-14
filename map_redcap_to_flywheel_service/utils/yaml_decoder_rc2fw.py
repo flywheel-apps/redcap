@@ -259,37 +259,38 @@ def build_redcap_dict(fields_of_interest, project, recordid):
 
             # Only one entry exists
             meta = meta[0]
-
-            if meta.get('field_type') == 'slider':
-                record_object.append(ec.RCslider(meta, r))
-
-            elif meta.get('field_type') == 'truefalse':
-                record_object.append(ec.RCtruefalse(meta, r))
-
-            elif meta.get('field_type') == 'yesno':
-                record_object.append(ec.RCyesno(meta, r))
-
-            elif meta.get('field_type') == 'notes':
-                record_object.append(ec.RCnotes(meta, r))
-
-            elif meta.get('field_type') == 'radio':
-                record_object.append(ec.RCradio(meta, r, rc_map))
-
-            elif meta.get('field_type') == 'checkbox':
-                record_object.append(ec.RCcheckbox(meta, r, rc_map))
-
-            elif meta.get('field_type') == 'dropdown':
-                record_object.append(ec.RCdropdown(meta, r, rc_map))
-
-            elif meta.get('field_type') == 'text':
-                record_object.append(ec.RCtext(meta, r))
-
-            elif meta.get('field_type') == 'calc':
-                record_object.append(ec.RCcalc(meta, r))
-
-            else:
-                log.warning(f"meta field type {meta.get('field_type')} not recognized")
-                record_object.append(ec.RCtext(meta, r))
+            ro = ec.RedcapField.factory(meta.get('field_type'), meta, r, rc_map)
+            record_object.append(ro)
+            # if meta.get('field_type') == 'slider':
+            #     record_object.append(ec.RCslider(meta, r))
+            #
+            # elif meta.get('field_type') == 'truefalse':
+            #     record_object.append(ec.RCtruefalse(meta, r))
+            #
+            # elif meta.get('field_type') == 'yesno':
+            #     record_object.append(ec.RCyesno(meta, r))
+            #
+            # elif meta.get('field_type') == 'notes':
+            #     record_object.append(ec.RCnotes(meta, r))
+            #
+            # elif meta.get('field_type') == 'radio':
+            #     record_object.append(ec.RCradio(meta, r, rc_map))
+            #
+            # elif meta.get('field_type') == 'checkbox':
+            #     record_object.append(ec.RCcheckbox(meta, r, rc_map))
+            #
+            # elif meta.get('field_type') == 'dropdown':
+            #     record_object.append(ec.RCdropdown(meta, r, rc_map))
+            #
+            # elif meta.get('field_type') == 'text':
+            #     record_object.append(ec.RCtext(meta, r))
+            #
+            # elif meta.get('field_type') == 'calc':
+            #     record_object.append(ec.RCcalc(meta, r))
+            #
+            # else:
+            #     log.warning(f"meta field type {meta.get('field_type')} not recognized")
+            #     record_object.append(ec.RCtext(meta, r))
 
         record_dict = {}
 
@@ -306,6 +307,9 @@ def build_redcap_dict(fields_of_interest, project, recordid):
         redcap_objects[id] = record_dict
 
     return(redcap_objects)
+
+def check_for_duplicates():
+    pass
 
 
 def rc_2_fw(yamlFile='',rc_api='', rc_url=''):
