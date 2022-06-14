@@ -118,7 +118,40 @@ def get_redcap_mc_map2(project):
     return(redcap_reassign_map)
 
 
-def remove_repeat_instances(records, record_id, foids):
+def separate_repeat_instance(records, record_id, foids, metadata):
+    """ Separate repeat instances into unique form ids
+
+
+    Args:
+        records:
+        record_id:
+        foids:
+
+    Returns:
+
+    """
+
+
+    unique_ids = set([r[record_id] for r in records])
+
+    for uid in unique_ids:
+        records_from_uid = {r for r in records if r[record_id]}
+
+
+def get_fields_from_repeating_instance(metadata, records):
+
+
+
+
+
+
+
+
+
+
+
+
+def remove_repeat_instances(records, record_id, foids, metadata):
     ''' Remover, via merging, any repeat records.
         Each subject with N repeating instances will appear to have N records.
         The records for each subject can contain partial information, thus the
@@ -130,6 +163,7 @@ def remove_repeat_instances(records, record_id, foids):
             record_id (str): key to obtain subjects ID from data dictionary
             foids (list(str)): list of fields of interest (field names from
                                REDCap)
+            metadata
 
         Returns:
             records (list(dict)): list of dict objects containing one
@@ -221,7 +255,7 @@ def build_redcap_dict(fields_of_interest, project, recordid):
     field_names = project.export_field_names()
 
     # Ensure each subject has only one record
-    rc_records = remove_repeat_instances(rc_records, recordid, fields_of_interest)
+    rc_records = remove_repeat_instances(rc_records, recordid, fields_of_interest, metadata)
 
     redcap_objects = {}
     log.info(f"found {len(rc_records)} records")
@@ -390,3 +424,11 @@ def rc_dict_2_fw(fw_project, rc_dict, fw_key_level, fw_key):
 # rc_dict, fw_key_level, fw_key = rc_2_fw()
 # rc_dict_2_fw(project, rc_dict, fw_key_level, fw_key)
 
+
+
+def create_SENSIBLE_rc_object_honestly_what_are_they_doing_over_there_at_redcap_its_such_a_shitshow(single_record, single_field, metadata, field_names):
+
+    record_value = single_record[single_field]
+
+
+def
