@@ -10,3 +10,5 @@
 # C extensions
 *.so
 .*/.idea/
+
+.*.DS_Store
