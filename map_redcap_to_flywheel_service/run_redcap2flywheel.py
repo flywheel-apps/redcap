@@ -47,17 +47,24 @@ def get_missing_inputs(args):
 ###################################
 
 
+def main(fwapi, projectID, yamlFile, rcAPI, rcURL):
+
+    # Initialize the fw client and redcap project
+    fw = flywheel.Client(fwapi)
+    project = fw.get_project(projectID)
+
+    # Get the dictionary of redcap metadata to upload to flywheel
+    rc_dict, fw_key_level, fw_key = yd.generate_redcap_dict(yamlFile, rcAPI, rcURL)
+    # Upload
+    yd.rc_dict_2_fw(project, rc_dict, fw_key_level, fw_key)
+
+
 if __name__ == '__main__':
     
     args = parser.parse_args().__dict__
     args = get_missing_inputs(args)
+    main(args['fwapi'], args['projectID'],args['yamlFile'], args['rcAPI'], args['rcURL'])
     
-    fw = flywheel.Client(args['fwapi'])
-    project = fw.get_project(args['projectID'])
-    
-    rc_dict, fw_key_level, fw_key = yd.rc_2_fw(args['yamlFile'], args['rcAPI'], args['rcURL'])
-    
-    yd.rc_dict_2_fw(project, rc_dict, fw_key_level, fw_key)
 
 # TODO:
 # - create subjects if ID doesn't exist
