@@ -13,15 +13,17 @@ record:
   # Finally we must know which container this fw_key is on:
   container_level: subject
 
-  # Together, these commands mean that by including they key/value
-  # pair: {'rc_subid': subject.label}, we can tell REDCap which 
-  # Record we will be updating.
+  # Together, this tells us that the unique redcap record field
+  # is "rc_subid" in redcap.  It also tells us that in flywheel,
+  # there will be a field that matches the value of this rc_subid
+  # at subject.info.REDCapID.  We can use this to match a flywheel subject
+  # with a redcap record.
 
 # This is the meat of the mapping.  It specifies which 
 # redcap metadata to import.
 fields: 
 
-  # This means the RC items listed here will be copied over to each subject
+  # The RC items listed here will be copied over to each subject
   - interpretable
   - pattern
   - pattern_atyp
