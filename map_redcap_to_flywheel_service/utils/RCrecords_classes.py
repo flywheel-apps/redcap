@@ -163,7 +163,7 @@ json3:  {
                 # if a user specifies that they want a field from a non repeating form, and that field is actually
                 # and truly blank, we want to capture that.  But we DON'T want to capture the non-repeating field value
                 # from json1, and then move on to json2 and overwrite the value with "blank"
-                # FML this is confusing.
+                # Heccin cattos this is confusing.
                 if field_object:
                     record_objects.append(field_object)
 
