@@ -4,7 +4,7 @@ record:
 
   # First we indicate what the redcap record ID label is:
   # In this case the label is "rc_subid" in redcap.
-  rc_key: record_id
+  rc_key: rc_subid
 
   # Now we indicate where the VALUE of this redcap record ID is
   # within flywheel:
