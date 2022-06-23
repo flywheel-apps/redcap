@@ -113,7 +113,8 @@ def generate_redcap_dict(yamlFile='', rc_api='', rc_url=''):
     record = dict_in["record"]
 
     # Fields tells us what redcap fields to import.  Deliberately opt-in to prevent
-    # accidental PHI ingest
+    # accidental PHI ingest.  Meaning, there is no Lazy "Ingest All Fields" option, you have to
+    # Review and approve the fields you're bringing into flywheel.
     fields = dict_in["fields"]
 
     # Explicitly extract relevant info from the record (where it's stored)

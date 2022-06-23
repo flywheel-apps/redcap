@@ -3,7 +3,6 @@ import logging
 import re
 from abc import ABC, abstractmethod
 
-# from utils.yaml_decoder_rc2fw import expand_metadata
 import sys
 
 log = logging.getLogger(__name__)
@@ -87,10 +86,10 @@ class Decoder(ABC):
     def get_name_choices(field_names_meta, field_meta):
         """ Special method needed for choose multi.
 
-        when you have a multiple choice (but choose multiple), the field NAME
+        when you have a multiple choice (and choose multiple), the field NAME
         itself changes in the record.  For example, in redcap, if you name
-        the field "choose_many", and the user selects three options from the
-        possible list, the record will show it as:
+        the field "choose_many", and the user selects two options from the
+        possible list of three, the record will show it as:
             "choose_many___1: 0
              choose_many___2: 1
              choose_many___3: 1"
@@ -116,9 +115,9 @@ class Decoder(ABC):
             1. see if the field value is 1 or zero
             2. extract the original field name
             3. see what the "choice_value" is in the field_name metadata
-            4. see what that choice corresponds to in the orignal metadata
+            4. see what that choice corresponds to in the original metadata
 
-        jfc.
+        Hecceroni.
 
         And yes maybe you could shortcut that The digit at the end of the
         underscores corresponds to the choice value, but I'm not taking
@@ -126,8 +125,8 @@ class Decoder(ABC):
         increases the likelihood that this will handle unforseen cases.
 
         Args:
-            field_names_meta:
-            field_meta:
+            field_names_meta (list): extra metadata information on field names and field types
+            field_meta: the redcap metadata object that exists for this field
 
         Returns:
             choices (dict): a dict with the field_name and its corresponding choice value:
@@ -177,7 +176,9 @@ class DecodeChooseMany(Decoder):
         Args:
             field_name (str): the field name we're evaluating
             field_value (list): a list of the chosen values for the field
-            rc_map (dict): a dictionary mapping of field names to value/label combos
+            field_meta: the redcap metadata object that exists for this field
+            field_names_meta (list): extra metadata information on field names and field types
+
 
         Returns:
 
@@ -234,7 +235,8 @@ class RedcapField:
         So, you can't even just search for "choose_many" in the record, you first
         need to see if "choose_many" exists,
     - yesno and truefalse are different, will be represented as "yesno", and "truefalse",
-        but will NOT get the metadata key that tells you 0=yes or 0=false.
+        but will NOT get the metadata key that tells you 0=yes or 0=false, so I make it myself
+        somewhere.  Idk look around.
 
     """
     type_ = None
@@ -327,8 +329,7 @@ class RedcapField:
 
 
     def get_fw_object(self):
-        """ Takes the values in the object and formats into a dict
-         them for flywheel
+        """ Takes the values in the object and formats into a dict for flywheel
 
         Returns:
             fw_dict_out (dict): dict formatted for flywheel metadata.
@@ -426,7 +427,7 @@ class RedcapField:
                     "field_name": field["original_field_name"],
                     "field_label": field["export_field_name"],
                     "form_name": form_name,
-                    "select_choices_or_calculations": "0, Incomplete | 1, unverified | 2, complete",
+                    "select_choices_or_calculations": "0, Incomplete | 1, Unverified | 2, Complete",
                 }
             ]
 

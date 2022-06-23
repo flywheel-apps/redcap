@@ -38,21 +38,38 @@ class RedcapRecord:
         Having these values makes it easier to handle repeating fields later.
 
         For the example above it could return the 3 jsons:
-        {
+        Please note that "json 1,2,3" WOULD NOT be part of the actual
+        data structure, they are just there for reference
+
+        Please Note:
+        "redcap_repeat_instance" is a CONSTANT redcap name that will be included if this
+            record has repeating instruments/forms/measurements.  IF this particular
+            record is for a repeating instance, it will have the NAME of the form that
+            is repeating in this record. ONLY fields from that form will have values,
+            ALL others will be blank.
+
+        "redcap_repeat_instrument" is a CONSTANT redcap name that will be included if this
+            record has repeating instruments/forms/measurements.  IF this particular
+            record is for a repeating instance, it will have a NUMBER that represents
+            how many times this form has been filled out (1,2,3, etc).
+
+        All other fields are made up to illustrate where they come from
+
+json 1: {
             'record_id': 'ID',
             'redcap_repeat_instrument': '',
             'redcap_repeat_instance': '',
             'single_form_field': 'value'
             'repeating_form_field': ''
         },
-        {
+json2:  {
             'record_id': 'ID',
             'redcap_repeat_instrument': 'repeating_form',
             'redcap_repeat_instance': '1',
             'single_form_field': ''
             'repeating_form_field': 'first value'
         },
-        {
+json3:  {
             'record_id': 'ID',
             'redcap_repeat_instrument': 'repeating_form',
             'redcap_repeat_instance': '2',
@@ -129,7 +146,24 @@ class RedcapRecord:
                 repeating = foi in self.repeat_fields
                 field_object = rfc.RedcapField(foi, self.full_meta, self.field_names, record, repeating)
 
-                # Check if this field should be appended or not (ex, ignore if blank because of repeating measures)
+                # Check if this field should be appended or not
+                # This is complicated but bear with me.
+                # Please reference the example in the docstring of identify_repeat_fields
+                # let's examine record "json1".  Note that it has all the fields from both the repeating
+                # and non-repeating forms.  However, Json1 is ONLY going to have values for the non-repeating forms.
+                # Therefore, if we're looking at the field "repeating_form_field", in json 1, we need to be able to say
+                # "Ah, this will always be blank in this json since "redcap_repeat_instrument" is blank, so we should
+                # NOT include it in this.
+
+                # Likewise, in json2, if we see that "redcap_repeat_instrument" is 'repeating_form', we need to say:
+                # "single_form_field" is not part of repeating form, so it will be blank, so don't include it", and
+                # "repeating_form_field" IS part of "repeating_form", so include it.
+
+                # THE REASON WE NEED TO FILTER THEM OUT and not just say "if it's blank ignore it", is because:
+                # if a user specifies that they want a field from a non repeating form, and that field is actually
+                # and truly blank, we want to capture that.  But we DON'T want to capture the non-repeating field value
+                # from json1, and then move on to json2 and overwrite the value with "blank"
+                # FML this is confusing.
                 if field_object:
                     record_objects.append(field_object)
 
