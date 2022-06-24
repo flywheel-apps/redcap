@@ -38,8 +38,12 @@ class RedcapRecord:
         Having these values makes it easier to handle repeating fields later.
 
         For the example above it could return the 3 jsons:
-        Please note that "json 1,2,3" WOULD NOT be part of the actual
-        data structure, they are just there for reference
+        Please note that "json 1,2,3" are lables that I added here just for clarity.
+        labels like that do not exist in the data in any way shape or form, not in the
+        raw data coming out of redcap, nor the curated data we send to flywheel.
+        Just pretend that someone printed out the data structure on a piece of paper
+        and then scrawled "json 1", "json 2", "json 3" next to it in the margin.
+        That's exactly what this example is.
 
         Please Note:
         "redcap_repeat_instance" is a CONSTANT redcap name that will be included if this
