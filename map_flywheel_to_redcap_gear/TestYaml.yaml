@@ -1,0 +1,393 @@
+subject:
+  record:
+    rc_key: rc_subid
+    container_level: self
+    fw_key: label
+    
+  containers:
+    ALL-CONTAINERS:
+      ContainerID: ALL-CONTAINERS
+      maps: {}
+    sub-13:
+      ContainerID: 5db0845e69d4f3002d16ee05
+      maps:
+        ethnicity: ethnicity_d1
+        label: fw_id_d1
+    sub-14:
+      ContainerID: 5db084a769d4f3002d16ee0c
+      maps:
+        ethnicity: ethnicity_d1
+        label: fw_id_d1
+    sub-15:
+      ContainerID: 5db0862569d4f3002c16ea52
+      maps:
+        ethnicity: ethnicity_d1
+        label: fw_id_d1
+    sub-12:
+      ContainerID: 5db0866f69d4f3002d16ee2b
+      maps:
+        ethnicity: ethnicity_d1
+        label: fw_id_d1
+    sub-10:
+      ContainerID: 5db09feb69d4f3002d16ee5b
+      maps:
+        ethnicity: ethnicity_d1
+        label: fw_id_d1
+    sub-16:
+      ContainerID: 5db09fff69d4f3002916edb9
+      maps:
+        ethnicity: ethnicity_d1
+        label: fw_id_d1
+    sub-09:
+      ContainerID: 5db0a01469d4f3002d16ee73
+      maps:
+        ethnicity: ethnicity_d1
+        label: fw_id_d1
+    sub-05:
+      ContainerID: 5db0a02869d4f3002d16ee7f
+      maps:
+        ethnicity: ethnicity_d1
+        label: fw_id_d1
+    sub-03:
+      ContainerID: 5db0a03c69d4f3002a16ebe3
+      maps:
+        ethnicity: ethnicity_d1
+        label: fw_id_d1
+    sub-04:
+      ContainerID: 5db0a05269d4f3002d16ee90
+      maps:
+        ethnicity: ethnicity_d1
+        label: fw_id_d1
+    sub-07:
+      ContainerID: 5db0a06969d4f3002d16ee96
+      maps:
+        ethnicity: ethnicity_d1
+        label: fw_id_d1
+    sub-08:
+      ContainerID: 5db0a09369d4f3002d16eea1
+      maps:
+        ethnicity: ethnicity_d1
+        label: fw_id_d1
+    sub-01:
+      ContainerID: 5db0a0a769d4f3002916ede0
+      maps:
+        ethnicity: ethnicity_d1
+        label: fw_id_d1
+    sub-02:
+      ContainerID: 5db0a0ca69d4f3002c16ea86
+      maps:
+        ethnicity: ethnicity_d1
+        label: fw_id_d1
+    sub-06:
+      ContainerID: 5db0a0dd69d4f3002416e993
+      maps:
+        ethnicity: ethnicity_d1
+        label: fw_id_d1
+    sub-11:
+      ContainerID: 5db0a10169d4f3001d16e9fc
+      maps:
+        ethnicity: ethnicity_d1
+        label: fw_id_d1
+session:
+  record:
+    rc_key: rc_subid
+    container_level: subject
+    fw_key: label
+  containers:
+    ALL-CONTAINERS:
+      ContainerID: ALL-CONTAINERS
+      maps: {}
+    ses-:
+      ContainerID: ALL-CONTAINERS
+      maps:
+        age_years: age_d1
+    ses2:
+      ContainerID: ALL-CONTAINERS
+      maps: {}
+acquisition:
+  record:
+    rc_key: rc_subid
+    container_level: subject
+    fw_key: label
+  containers:
+    ALL-CONTAINERS:
+      ContainerID: ALL-CONTAINERS
+      maps: {}
+    task-balloonanalogrisktask_run-02:
+      ContainerID: ALL-CONTAINERS
+      maps: {}
+      files:
+        sub-01_task-balloonanalogrisktask_run-02_events.tsv:
+          maps: {}
+        sub-03_task-balloonanalogrisktask_run-02_bold.nii.gz:
+          maps: {}
+        sub-02_task-balloonanalogrisktask_run-02_events.tsv:
+          maps: {}
+        sub-03_task-balloonanalogrisktask_run-02_events.tsv:
+          maps: {}
+        sub-12_task-balloonanalogrisktask_run-02_events.tsv:
+          maps: {}
+        sub-16_task-balloonanalogrisktask_run-02_events.tsv:
+          maps: {}
+        sub-01_task-balloonanalogrisktask_run-02_bold.nii.gz:
+          maps: {}
+        sub-14_task-balloonanalogrisktask_run-02_bold.nii.gz:
+          maps: {}
+        sub-14_task-balloonanalogrisktask_run-02_events.tsv:
+          maps: {}
+        sub-05_task-balloonanalogrisktask_run-02_events.tsv:
+          maps: {}
+        sub-13_task-balloonanalogrisktask_run-02_bold.nii.gz:
+          maps: {}
+        sub-16_task-balloonanalogrisktask_run-02_bold.nii.gz:
+          maps: {}
+        sub-08_task-balloonanalogrisktask_run-02_bold.nii.gz:
+          maps: {}
+        sub-09_task-balloonanalogrisktask_run-02_bold.nii.gz:
+          maps: {}
+        sub-13_task-balloonanalogrisktask_run-02_events.tsv:
+          maps: {}
+        sub-10_task-balloonanalogrisktask_run-02_events.tsv:
+          maps: {}
+        sub-08_task-balloonanalogrisktask_run-02_events.tsv:
+          maps: {}
+        sub-11_task-balloonanalogrisktask_run-02_bold.nii.gz:
+          maps: {}
+        sub-15_task-balloonanalogrisktask_run-02_bold.nii.gz:
+          maps: {}
+        sub-06_task-balloonanalogrisktask_run-02_bold.nii.gz:
+          maps: {}
+        sub-02_task-balloonanalogrisktask_run-02_bold.nii.gz:
+          maps: {}
+        sub-15_task-balloonanalogrisktask_run-02_events.tsv:
+          maps: {}
+        sub-12_task-balloonanalogrisktask_run-02_bold.nii.gz:
+          maps: {}
+        sub-04_task-balloonanalogrisktask_run-02_bold.nii.gz:
+          maps: {}
+        sub-05_task-balloonanalogrisktask_run-02_bold.nii.gz:
+          maps: {}
+        sub-10_task-balloonanalogrisktask_run-02_bold.nii.gz:
+          maps: {}
+        sub-11_task-balloonanalogrisktask_run-02_events.tsv:
+          maps: {}
+        sub-06_task-balloonanalogrisktask_run-02_events.tsv:
+          maps: {}
+        sub-07_task-balloonanalogrisktask_run-02_bold.nii.gz:
+          maps: {}
+        sub-04_task-balloonanalogrisktask_run-02_events.tsv:
+          maps: {}
+        sub-07_task-balloonanalogrisktask_run-02_events.tsv:
+          maps: {}
+        sub-09_task-balloonanalogrisktask_run-02_events.tsv:
+          maps: {}
+    task-balloonanalogrisktask_run-03:
+      ContainerID: ALL-CONTAINERS
+      maps: {}
+      files:
+        sub-14_task-balloonanalogrisktask_run-03_events.tsv:
+          maps: {}
+        sub-09_task-balloonanalogrisktask_run-03_events.tsv:
+          maps: {}
+        sub-05_task-balloonanalogrisktask_run-03_bold.nii.gz:
+          maps: {}
+        sub-06_task-balloonanalogrisktask_run-03_bold.nii.gz:
+          maps: {}
+        sub-05_task-balloonanalogrisktask_run-03_events.tsv:
+          maps: {}
+        sub-15_task-balloonanalogrisktask_run-03_events.tsv:
+          maps: {}
+        sub-08_task-balloonanalogrisktask_run-03_events.tsv:
+          maps: {}
+        sub-01_task-balloonanalogrisktask_run-03_bold.nii.gz:
+          maps: {}
+        sub-06_task-balloonanalogrisktask_run-03_events.tsv:
+          maps: {}
+        sub-12_task-balloonanalogrisktask_run-03_bold.nii.gz:
+          maps: {}
+        sub-10_task-balloonanalogrisktask_run-03_bold.nii.gz:
+          maps: {}
+        sub-02_task-balloonanalogrisktask_run-03_bold.nii.gz:
+          maps: {}
+        sub-12_task-balloonanalogrisktask_run-03_events.tsv:
+          maps: {}
+        sub-07_task-balloonanalogrisktask_run-03_events.tsv:
+          maps: {}
+        sub-11_task-balloonanalogrisktask_run-03_events.tsv:
+          maps: {}
+        sub-10_task-balloonanalogrisktask_run-03_events.tsv:
+          maps: {}
+        sub-15_task-balloonanalogrisktask_run-03_bold.nii.gz:
+          maps: {}
+        sub-13_task-balloonanalogrisktask_run-03_events.tsv:
+          maps: {}
+        sub-11_task-balloonanalogrisktask_run-03_bold.nii.gz:
+          maps: {}
+        sub-01_task-balloonanalogrisktask_run-03_events.tsv:
+          maps: {}
+        sub-08_task-balloonanalogrisktask_run-03_bold.nii.gz:
+          maps: {}
+        sub-04_task-balloonanalogrisktask_run-03_bold.nii.gz:
+          maps: {}
+        sub-09_task-balloonanalogrisktask_run-03_bold.nii.gz:
+          maps: {}
+        sub-03_task-balloonanalogrisktask_run-03_bold.nii.gz:
+          maps: {}
+        sub-07_task-balloonanalogrisktask_run-03_bold.nii.gz:
+          maps: {}
+        sub-16_task-balloonanalogrisktask_run-03_bold.nii.gz:
+          maps: {}
+        sub-03_task-balloonanalogrisktask_run-03_events.tsv:
+          maps: {}
+        sub-04_task-balloonanalogrisktask_run-03_events.tsv:
+          maps: {}
+        sub-02_task-balloonanalogrisktask_run-03_events.tsv:
+          maps: {}
+        sub-13_task-balloonanalogrisktask_run-03_bold.nii.gz:
+          maps: {}
+        sub-14_task-balloonanalogrisktask_run-03_bold.nii.gz:
+          maps: {}
+        sub-16_task-balloonanalogrisktask_run-03_events.tsv:
+          maps: {}
+    T1w:
+      ContainerID: ALL-CONTAINERS
+      maps: 
+        info.custom_acq1: acq_b1
+      files:
+        sub-14_T1w.nii.gz:
+          maps:
+            info.BIDS.Path: fw_bids_b1
+        sub-11_T1w.nii.gz:
+          maps: {}
+        sub-16_T1w.nii.gz:
+          maps: {}
+        sub-05_T1w.nii.gz:
+          maps: {}
+        sub-10_T1w.nii.gz:
+          maps: {}
+        sub-02_T1w.nii.gz:
+          maps: {}
+        sub-06_T1w.nii.gz:
+          maps: {}
+        sub-15_T1w.nii.gz:
+          maps: {}
+        sub-01_T1w.nii.gz:
+          maps: {}
+        sub-09_T1w.nii.gz:
+          maps: {}
+        sub-08_T1w.nii.gz:
+          maps: {}
+        sub-07_T1w.nii.gz:
+          maps: {}
+        sub-12_T1w.nii.gz:
+          maps: {}
+        sub-03_T1w.nii.gz:
+          maps: {}
+        sub-04_T1w.nii.gz:
+          maps: {}
+        sub-13_T1w.nii.gz:
+          maps: {}
+    inplaneT2:
+      ContainerID: ALL-CONTAINERS
+      maps: {}
+      files:
+        sub-14_inplaneT2.nii.gz:
+          maps: {}
+        sub-09_inplaneT2.nii.gz:
+          maps: {}
+        sub-13_inplaneT2.nii.gz:
+          maps: {}
+        sub-06_inplaneT2.nii.gz:
+          maps: {}
+        sub-08_inplaneT2.nii.gz:
+          maps: {}
+        sub-07_inplaneT2.nii.gz:
+          maps: {}
+        sub-04_inplaneT2.nii.gz:
+          maps: {}
+        sub-02_inplaneT2.nii.gz:
+          maps: {}
+        sub-10_inplaneT2.nii.gz:
+          maps: {}
+        sub-16_inplaneT2.nii.gz:
+          maps: {}
+        sub-12_inplaneT2.nii.gz:
+          maps: {}
+        sub-01_inplaneT2.nii.gz:
+          maps: {}
+        sub-11_inplaneT2.nii.gz:
+          maps: {}
+        sub-03_inplaneT2.nii.gz:
+          maps: {}
+        sub-15_inplaneT2.nii.gz:
+          maps: {}
+        sub-05_inplaneT2.nii.gz:
+          maps: {}
+    task-balloonanalogrisktask_run-01:
+      ContainerID: ALL-CONTAINERS
+      maps: {}
+      files:
+        sub-02_task-balloonanalogrisktask_run-01_events.tsv:
+          maps: {}
+        sub-12_task-balloonanalogrisktask_run-01_events.tsv:
+          maps: {}
+        sub-09_task-balloonanalogrisktask_run-01_events.tsv:
+          maps: {}
+        sub-08_task-balloonanalogrisktask_run-01_events.tsv:
+          maps: {}
+        sub-01_task-balloonanalogrisktask_run-01_events.tsv:
+          maps: {}
+        sub-07_task-balloonanalogrisktask_run-01_events.tsv:
+          maps: {}
+        sub-11_task-balloonanalogrisktask_run-01_bold.nii.gz:
+          maps: {}
+        sub-10_task-balloonanalogrisktask_run-01_events.tsv:
+          maps: {}
+        sub-09_task-balloonanalogrisktask_run-01_bold.nii.gz:
+          maps: {}
+        sub-03_task-balloonanalogrisktask_run-01_events.tsv:
+          maps: {}
+        sub-13_task-balloonanalogrisktask_run-01_bold.nii.gz:
+          maps: {}
+        sub-06_task-balloonanalogrisktask_run-01_bold.nii.gz:
+          maps: {}
+        sub-01_task-balloonanalogrisktask_run-01_bold.nii.gz:
+          maps: {}
+        sub-10_task-balloonanalogrisktask_run-01_bold.nii.gz:
+          maps: {}
+        sub-08_task-balloonanalogrisktask_run-01_bold.nii.gz:
+          maps: {}
+        sub-15_task-balloonanalogrisktask_run-01_events.tsv:
+          maps: {}
+        sub-16_task-balloonanalogrisktask_run-01_events.tsv:
+          maps: {}
+        sub-14_task-balloonanalogrisktask_run-01_bold.nii.gz:
+          maps: {}
+        sub-07_task-balloonanalogrisktask_run-01_bold.nii.gz:
+          maps: {}
+        sub-04_task-balloonanalogrisktask_run-01_events.tsv:
+          maps: {}
+        sub-05_task-balloonanalogrisktask_run-01_bold.nii.gz:
+          maps: {}
+        sub-03_task-balloonanalogrisktask_run-01_bold.nii.gz:
+          maps: {}
+        sub-13_task-balloonanalogrisktask_run-01_events.tsv:
+          maps: {}
+        sub-12_task-balloonanalogrisktask_run-01_bold.nii.gz:
+          maps: {}
+        sub-16_task-balloonanalogrisktask_run-01_bold.nii.gz:
+          maps: {}
+        sub-02_task-balloonanalogrisktask_run-01_bold.nii.gz:
+          maps: {}
+        sub-06_task-balloonanalogrisktask_run-01_events.tsv:
+          maps: {}
+        sub-05_task-balloonanalogrisktask_run-01_events.tsv:
+          maps: {}
+        sub-15_task-balloonanalogrisktask_run-01_bold.nii.gz:
+          maps: {}
+        sub-11_task-balloonanalogrisktask_run-01_events.tsv:
+          maps: {}
+        sub-14_task-balloonanalogrisktask_run-01_events.tsv:
+          maps: {}
+        sub-04_task-balloonanalogrisktask_run-01_bold.nii.gz:
+          maps: {}

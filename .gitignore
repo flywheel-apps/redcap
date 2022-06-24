@@ -1,0 +1,14 @@
+# Swap files
+*.swp
+
+# Byte-compiled / optimized / DLL files
+.*/__pycache__/
+*.py[cod]
+*$py.class
+
+
+# C extensions
+*.so
+.*/.idea/
+
+.*.DS_Store

@@ -1,0 +1,114 @@
+{
+  "name": "generate-redcap-template",
+  "label": "Generate Flywheel to Redcap Metadata Template",
+  "description": "A gear to generate a YAML template to assist in transferring flywheel metadata to REDCAP",
+  "maintainer": "Michael Perry <lmperry@stanford.edu>",
+  "author": "Loki, the trickster god",
+  "url": "http://fsl.fmrib.ox.ac.uk/fsl/fslwiki/BET",
+  "source": "https://github.com/scitran-apps/fsl-bet",
+  "license": "MIT",
+  "version": "0.0.0_alpha6",
+  "custom": {
+    "flywheel": {
+      "suite": "REDCap"
+    },
+    "docker-image": "flywheel/redcap_template:0.0.0",
+    "gear-builder": {
+      "category": "analysis",
+      "image": "flywheel/redcap_template:0.0.0"
+    }
+  },
+  "config": {
+    "Gear Log Level": {
+      "default": "debug",
+      "description": "Gear Log verbosity level (ERROR|WARNING|INFO|DEBUG)",
+      "type": "string",
+                        "enum": [
+                                "error",
+                                "warning",
+                                "info",
+                                "debug"
+                        ]
+      
+    },
+    "1a Add Rules for 'all subjects'": {
+      "description": "will add a section to the yaml file that is applied to all subjects",
+      "type": "boolean",
+      "default": true
+    },
+    "1b Populate every subject in project": {
+      "description": "will add a section to the yaml file for each subject",
+      "type": "boolean",
+      "default": false
+    },
+    "1c Add Rules for subject files": {
+      "description": "will add a section to the yaml file for files at the subject level",
+      "type": "boolean",
+      "default": false
+    },
+    "2a Add Rules for 'all sessions'": {
+      "description": "will add a section to the yaml file that is applied to all sessions",
+      "type": "boolean",
+      "default": true
+    },
+    "2b Populate every session in project": {
+      "description": "will add a section to the yaml file for each session",
+      "type": "boolean",
+      "default": false
+    },
+    "2c Add Rules for session files": {
+      "description": "will add a section to the yaml file for files at the session level",
+      "type": "boolean",
+      "default": false
+    },
+    "3a Add Rules for 'all acquisitions'": {
+      "description": "will add a section to the yaml file that is applied to all acquisitions",
+      "type": "boolean",
+      "default": true
+    },
+    "3b Populate every acquisition in project": {
+      "description": "will add a section to the yaml file for each acquisition",
+      "type": "boolean",
+      "default": false
+    },
+    "3c Add Rules for acquisition files": {
+      "description": "will add a section to the yaml file for files at the acquisition level",
+      "type": "boolean",
+      "default": false
+    },
+    "4a Redcap record ID variable name": {
+      "description": "the name of the variable in redcap that identifies the record ID",
+      "type": "string",
+      "optional": false
+    },
+    "4b Container type that has redcap ID in metadata": {
+      "description": "enter the name of the metadata field that has the redcap ID",
+      "type": "string", 
+      "enum": [
+        "subject",
+        "session",
+        "acquisition"
+      ]
+    },
+    "4c Metadata field that contains redcap ID": {
+      "description": "The name of the metadata field (On the container type specified in 4b) that has the redcap ID",
+      "type": "string",
+      "optional": false
+    }
+  },
+  "inputs": {
+    "api_key": {
+          "base": "api-key",
+          "read-only": true
+      }
+ 
+    },
+
+  "environment": {
+    "PYTHONPATH": "/flywheel/v0",
+    "USER": "flywheel"
+    
+  },
+  "command": "python3 /flywheel/v0/run.py"
+}
+

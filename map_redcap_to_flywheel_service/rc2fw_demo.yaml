@@ -1,0 +1,42 @@
+# This describes where we will find the correct REDCAP
+# "record ID" for metadata at the subject level
+record:
+
+  # First we indicate what the redcap record ID label is:
+  # In this case the label is "rc_subid" in redcap.
+  rc_key: rc_subid
+
+  # Now we indicate where the VALUE of this redcap record ID is
+  # within flywheel:
+  fw_key: info.REDCapID
+
+  # Finally we must know which container this fw_key is on:
+  container_level: subject
+
+  # Together, this tells us that the unique redcap record field
+  # is "rc_subid" in redcap.  It also tells us that in flywheel,
+  # there will be a field that matches the value of this rc_subid
+  # at subject.info.REDCapID.  We can use this to match a flywheel subject
+  # with a redcap record.
+
+# This is the meat of the mapping.  It specifies which 
+# redcap metadata to import.
+fields: 
+
+  # The RC items listed here will be copied over to each subject
+  - interpretable
+  - pattern
+  - pattern_atyp
+  - findings_op
+  - ggo_density
+  - ggo_other
+  - severity_rl
+  - severity_lu
+  - vasc_findings
+  - slider_test
+  - mc_drop
+  - l_edv
+  - l_esv
+  - l_hr
+  - l_co
+
